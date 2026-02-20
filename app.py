@@ -2,8 +2,11 @@ from flask import Flask, render_template, request
 import nltk
 from nltk.tokenize import word_tokenize
 from collections import defaultdict
+import os
 
 app = Flask(__name__)
+
+nltk.download('punkt')
 
 # Load NRC Lexicon
 lexicon = defaultdict(list)
@@ -32,7 +35,7 @@ def detect_emotion(text):
     total = sum(emotions.values())
 
     if total == 0:
-        return {}
+        return {}, ""
 
     # Convert to percentage
     percentages = {}
@@ -65,4 +68,5 @@ def home():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT",10000))
+    app.run(host = "0.0.0.0", port=port)
