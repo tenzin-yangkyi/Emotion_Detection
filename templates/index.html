@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <h1>Emotion Detection from Text</h1>
+    <title>Enter Your Thoughts</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fb;
+            text-align: center;
+        }
+
+        textarea {
+            width: 400px;
+            height: 120px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+        .emotion {
+            font-size: 20px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Emotion Analyzer</h1>
+
+<form method="POST">
+    <textarea name="text" placeholder="Enter text here">{{ text }}</textarea>
+    <p id="count">Words: 0</p>
+    <br><br>
+
+    <button type="submit">Analyze Emotion</button>
+
+    <button type="button" onclick="window.location.href='/'">
+        Clear
+    </button>
+</form>
+{% if main_emotion %}
+<h2>Main Emotion: {{ main_emotion }}</h2>
+{% endif %}
+<div class="result">
+    
+    <h2>Detected Emotions:</h2>
+
+    {% if emotions %}
+    
+    {% for emotion, score in emotions.items() %}
+    <p>
+    {% if emotion == "joy" %} 😊 {% endif %}
+    {% if emotion == "sadness" %} 😢 {% endif %}
+    {% if emotion == "anger" %} 😠 {% endif %}
+    {% if emotion == "fear" %} 😨 {% endif %}
+    {% if emotion == "surprise" %} 😲 {% endif %}
+    {% if emotion == "trust" %} 🤝 {% endif %}
+    
+    {{ emotion }} : {{ score }}%
+    </p>
+    {% endfor %}
+   {% else %}
+    <p>No emotions detected</p>
+    {% endif %}
+</div>
+<script>
+    document.querySelector("textarea").addEventListener("input", function() {
+        let words = this.value.split(" ").length;
+        document.getElementById("count").innerText = "Words: " + words;
+    });
+</script>
+</body>
+</html>
