@@ -46,7 +46,12 @@ def detect_emotion(text):
     top_emotions = dict(
         sorted(percentages.items(), key=lambda x: x[1], reverse=True)[:3]
     )
-    main_emotion = max(top_emotions, key=top_emotions.get)
+    priority = ["joy", "trust", "surprise", "sadness", "fear", "anger", "disgust", "anticipation"]
+
+    main_emotion = sorted(
+        top_emotions.items(),
+        key=lambda x: (-x[1], priority.index(x[0]) if x[0] in priority else 999)
+    )[0][0]
     return top_emotions, main_emotion
 
 # Homepage
