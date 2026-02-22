@@ -23,7 +23,7 @@ def detect_emotion(text):
     emotions = defaultdict(int)
 
     # Count emotions
-    ignore = ["positive", "negative"]
+    ignore = ["positive", "negative", "anticipation"]
 
     for word in tokens:
         if word in lexicon:
@@ -46,7 +46,7 @@ def detect_emotion(text):
     top_emotions = dict(
         sorted(percentages.items(), key=lambda x: x[1], reverse=True)[:3]
     )
-    priority = ["joy", "trust", "surprise", "sadness", "fear", "anger", "disgust", "anticipation"]
+    priority = ["joy", "trust", "surprise", "sadness", "fear", "anger", "disgust"]
 
     main_emotion = sorted(
         top_emotions.items(),

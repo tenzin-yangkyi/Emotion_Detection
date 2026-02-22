@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial;
-            background: #f5f7fb;
+            background: linear-gradient(135deg, #f5f7fb, #e0eafc, #fce4f0);
             text-align: center;
         }
 
@@ -15,15 +15,29 @@
             height: 120px;
             padding: 10px;
             font-size: 16px;
+            border: 2px solid #a78bfa;
+            border-radius: 8px;
+            outline: none;
+            background: #fefefe;
+        }
+
+        textarea:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
         }
 
         button {
             padding: 10px 20px;
             margin: 5px;
-            background: blue;
+            background:  linear-gradient(135deg, #6366f1, #a855f7);
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
         }
 
         .result {
@@ -32,17 +46,29 @@
             padding: 20px;
             display: inline-block;
             border-radius: 10px;
+            border: 2px solid #e9d5ff;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.15);
         }
         .emotion {
-            font-size: 20px;
-            padding: 5px;
+        font-size: 20px;
+        padding: 5px;
         }
+        p {
+        color: #374151;
+        }
+        h1 {
+        color: #6d28d9;
+        }
+        h2 {
+        color: #7c3aed;
+        }
+      
     </style>
 </head>
 
 <body>
 
-<h1>Emotion Analyzer</h1>
+<h1>What are your thoughts ? </h1>
 
 <form method="POST">
     <textarea name="text" placeholder="Enter text here">{{ text }}</textarea>
