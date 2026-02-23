@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <h1>Emotion Detection from Text</h1>
-    <title>Enter Your Thoughts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+
     <style>
         body {
             font-family: Arial;
             background: linear-gradient(135deg, #f5f7fb, #e0eafc, #fce4f0);
             text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #6d28d9;
+        }
+
+        h2 {
+            color: #7c3aed;
+        }
+
+        p {
+            color: #374151;
         }
 
         textarea {
@@ -19,6 +35,7 @@
             border-radius: 8px;
             outline: none;
             background: #fefefe;
+            resize: none;
         }
 
         textarea:focus {
@@ -29,13 +46,14 @@
         button {
             padding: 10px 20px;
             margin: 5px;
-            background:  linear-gradient(135deg, #6366f1, #a855f7);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             color: white;
             border: none;
             cursor: pointer;
             border-radius: 8px;
             font-size: 15px;
         }
+
         button:hover {
             background: linear-gradient(135deg, #4f46e5, #9333ea);
         }
@@ -48,69 +66,79 @@
             border-radius: 10px;
             border: 2px solid #e9d5ff;
             box-shadow: 0 4px 20px rgba(168, 85, 247, 0.15);
+            min-width: 300px;
         }
+
         .emotion {
-        font-size: 20px;
-        padding: 5px;
+            font-size: 18px;
+            padding: 5px;
         }
-        p {
-        color: #374151;
+
+        #count {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #6b7280;
         }
-        h1 {
-        color: #6d28d9;
-        }
-        h2 {
-        color: #7c3aed;
-        }
-      
     </style>
 </head>
 
 <body>
 
-<h1>What are your thoughts ? </h1>
+<h1>Emotion Detection from Text</h1>
+<h2>What are your thoughts?</h2>
 
 <form method="POST">
-    <textarea name="text" placeholder="Enter text here">{{ text }}</textarea>
+    <textarea name="text" id="textInput" placeholder="Enter text here...">{{ text }}</textarea>
     <p id="count">Words: 0</p>
     <br><br>
 
     <button type="submit">Analyze Emotion</button>
-
-    <button type="button" onclick="window.location.href='/'">
-        Clear
-    </button>
+    <button type="button" onclick="clearText()">Clear</button>
 </form>
+
 {% if main_emotion %}
 <h2>Main Emotion: {{ main_emotion }}</h2>
 {% endif %}
+
+{% if emotions %}
 <div class="result">
-    
     <h2>Detected Emotions:</h2>
 
-    {% if emotions %}
-    
     {% for emotion, score in emotions.items() %}
-    <p>
-    {% if emotion == "joy" %} 😊 {% endif %}
-    {% if emotion == "sadness" %} 😢 {% endif %}
-    {% if emotion == "anger" %} 😠 {% endif %}
-    {% if emotion == "fear" %} 😨 {% endif %}
-    {% if emotion == "surprise" %} 😲 {% endif %}
-    {% if emotion == "trust" %} 🤝 {% endif %}
-    
-    {{ emotion }} : {{ score }}%
+    <p class="emotion">
+        {% if emotion == "joy" %} 😊 {% endif %}
+        {% if emotion == "sadness" %} 😢 {% endif %}
+        {% if emotion == "anger" %} 😠 {% endif %}
+        {% if emotion == "fear" %} 😨 {% endif %}
+        {% if emotion == "surprise" %} 😲 {% endif %}
+        {% if emotion == "trust" %} 🤝 {% endif %}
+
+        {{ emotion }} : {{ score }}%
     </p>
     {% endfor %}
-   {% else %}
-    <p>No emotions detected</p>
-    {% endif %}
 </div>
+{% endif %}
+
 <script>
-    document.querySelector("textarea").addEventListener("input", function() {
-        let words = this.value.split(" ").length;
-        document.getElementById("count").innerText = "Words: " + words;
-    });
+    const textarea = document.getElementById("textInput");
+    const counter = document.getElementById("count");
+
+    function updateWordCount() {
+        let text = textarea.value.trim();
+        let words = text === "" ? 0 : text.split(/\s+/).length;
+        counter.innerText = "Words: " + words;
+    }
+
+    textarea.addEventListener("input", updateWordCount);
+
+    function clearText() {
+        textarea.value = "";
+        counter.innerText = "Words: 0";
+    }
+
+    // Fix: show correct count if text already exists
+    window.onload = updateWordCount;
 </script>
+
 </body>
 </html>
