@@ -72,6 +72,30 @@ def home():
         text=text
     )
 
+# Accuracy Testing
+def test_accuracy():
+    test_data = [
+        ("I am very happy", "joy"),
+        ("I feel so sad", "sadness"),
+        ("I am angry", "anger"),
+        ("I am scared", "fear"),
+        ("Wow that's surprising", "surprise")
+    ]
+
+    correct = 0
+    total = len(test_data)
+
+    for text, expected in test_data:
+        emotions, main_emotion = detect_emotion(text)
+        if main_emotion == expected:
+            correct += 1
+
+    accuracy = (correct / total) * 100
+    print("Model Accuracy:", accuracy, "%")
+
+# Run accuracy test
+test_accuracy()
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT",10000))
     app.run(host = "0.0.0.0", port=port)
